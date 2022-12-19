@@ -19,7 +19,7 @@ connectToServer((err) => {
     console.log(err);
   }
 });
-app.use("/api/v1/users", usersRoutes);
+app.use("/api/v1/user", usersRoutes);
 
 
 app.all("*", (req, res) => {
