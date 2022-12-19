@@ -10,7 +10,7 @@ router.get("/random", userController.getRandomUser);
 router.get("/all", userController.getAllUsers);
 router.post("/save", userController.createUser);
 router.patch("/update", userController.updateUser);
-router.patch("/bulkUpdate", userController.bulkUpdateUser);
+router.patch("/bulk-update", userController.bulkUpdateUser);
 router.delete("/delete/:id", userController.deleteUser);
 
 
