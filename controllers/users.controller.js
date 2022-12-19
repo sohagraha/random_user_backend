@@ -1,7 +1,6 @@
 const users = require('../public/users.json');
 const fs = require('fs');
 'use strict';
-
 module.exports.getAllUsers = (req, res) => {
     let { limit } = req.query;
     console.log(limit);
@@ -13,10 +12,7 @@ module.exports.getAllUsers = (req, res) => {
         res.json({ success: true, data: users, message: "All users", status: 200 });
     }
 }
-
 module.exports.getRandomUser = (req, res) => {
-
-
     const randomUserFunc = () => {
         const randomUser = users[Math.floor(Math.random() * users.length)];
         if (randomUser) {
@@ -28,7 +24,6 @@ module.exports.getRandomUser = (req, res) => {
     const randomUser = randomUserFunc();
     res.json({ success: true, data: randomUser, message: "Random user", status: 200 });
 }
-
 module.exports.createUser = (req, res) => {
 
     const { id, name, gender, contact, address, photoUrl } = req.body;
@@ -62,7 +57,6 @@ module.exports.createUser = (req, res) => {
 
     }
 }
-
 module.exports.updateUser = (req, res) => {
     const {
         id,
@@ -74,7 +68,7 @@ module.exports.updateUser = (req, res) => {
         user.name = data.name || user.name;
         user.address = data.address || user.address;
         user.contact = data.contact || user.contact;
-        user.gender  = data.gender || user.gender;
+        user.gender = data.gender || user.gender;
         user.photoUrl = data.photoUrl || user.photoUrl;
 
         fs.writeFile('./public/users.json', JSON.stringify(users), (err) => {
@@ -90,9 +84,6 @@ module.exports.updateUser = (req, res) => {
         res.json({ success: false, data: null, message: "User not found", status: 404 });
     }
 }
-
-
-
 module.exports.deleteUser = (req, res) => {
     const { id } = req.params;
     const user = users.find(user => user.id === +id);
@@ -117,6 +108,29 @@ module.exports.deleteUser = (req, res) => {
             success: false, data: null, message
                 : "User not found", status: 404
         });
+    }
+}
+module.exports.bulkUpdateUser = (req, res) => {
+    const { data, newBody } = req.body;
+    users.forEach(user => {
+        if (data.includes(user.id)) {
+            user.id = newBody.id || user.id;
+            user.name = newBody.name || user.name;
+            user.address = newBody.address || user.address;
+            user.contact = newBody.contact || user.contact
+            user.gender = newBody.gender || user.gender;
+            user.photoUrl = newBody.photoUrl || user.photoUrl;
+        }
+    })
+    if (users) {
+        fs.writeFile('./public/users.json', JSON.stringify(users), (err) => {
+            if (err) {
+                res.json({ success: false, data: null, message: "Error while writing to file", status: 500 });
+            } else {
+                res.json({ success: true, data: users, message: "Users updated", status: 200 });
+            }
+        }
+        );
     }
 }
 
