@@ -7,7 +7,6 @@ Get all the users from the .json file : https://random-user-backend.vercel.app/a
 Save a user in the .json file : https://random-user-backend.vercel.app/api/v1/user/save (POST)
 
 ```
-body:
 {
 "name": "John Test 2",
 "gender": "male",
@@ -21,7 +20,6 @@ body:
 Update a user's information in the .json file using its id : https://random-user-backend.vercel.app/api/v1/user/update (PATCH)
 
 ```
-body :
 {
   "id":6,
   "data":{
@@ -34,7 +32,7 @@ body :
 Update multiple users' information in the .json file : https://random-user-backend.vercel.app/api/v1/user/bulk-update (PATCH)
 
 ```
-body : {
+ {
 "data":[1,2,3,12],
 "newBody":{
 "name":"Test Bulk Update"
